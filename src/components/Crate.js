@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 
 function Crate(props) {
   return (
-    <p><em>{props.name}</em></p>
+    <>
+      <h2>Piper's Inventory</h2>
+      <p><em>{props.name}</em></p>
+    </>
   );
 }
 
