@@ -51,7 +51,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Known Bugs
 
-* _Any known issues_
+* None
 
 ## License
 [MIT](https://opensource.org/license/mit)
