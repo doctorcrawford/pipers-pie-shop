@@ -11,7 +11,7 @@ function Inventory(props) {
     inventory =
       props.inventory.map((crate) =>
         <Crate
-          whenCrateClicked={ props.onCrateSelection }
+          whenCrateClicked={props.onCrateSelection}
           name={crate.name}
           id={crate.id}
           key={crate.id} />

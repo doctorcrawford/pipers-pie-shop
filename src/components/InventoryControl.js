@@ -43,6 +43,7 @@ class InventoryControl extends React.Component {
 
   handleAddingNewCrateToInventory = (newCrate) => {
     const newMainInventory = this.state.mainInventory.concat(newCrate);
+    console.log(newCrate.id);
     this.setState({
       mainInventory: newMainInventory,
       formVisibleOnPage: false
@@ -64,9 +65,6 @@ class InventoryControl extends React.Component {
     } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewCrateForm onNewCrateCreation={this.handleAddingNewCrateToInventory} />;
       buttonText = 'Return to Inventory';
-    } else if (this.state.mainInventory[0] === undefined) {
-      currentlyVisibleState = <Inventory inventory={this.state.mainInventory} />;
-      buttonText = 'Add Crate';
     } else if (this.state.mainInventory) {
       currentlyVisibleState = <Inventory inventory={this.state.mainInventory} onCrateSelection={this.handleChangingSelectedCrate} />;
       buttonText = 'Add Crate';
