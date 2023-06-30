@@ -3,6 +3,7 @@ import Inventory from "./Inventory";
 import NewInventoryItemForm from "./NewCrateForm";
 import NewCrateForm from "./NewCrateForm";
 import Crate from "./Crate";
+import CrateDetail from "./CrateDetail";
 
 class InventoryControl extends React.Component {
 
@@ -10,15 +11,22 @@ class InventoryControl extends React.Component {
     super(props);
     this.state = {
       formVisibleOnPage: false,
-      crateVisibleOnPage: 0,
+      selectedCrate: null,
       mainInventory: []
     }
   }
 
   handleClick = () => {
-    this.setState(prevState => ({
-      formVisibleOnPage: !prevState.formVisibleOnPage
-    }));
+    if (this.setState.selectedCrate != null) {
+      this.setState({
+        formVisibleOnPage: false,
+        selectedCrate: null
+      });
+    } else {
+      this.setState(prevState => ({
+        formVisibleOnPage: !prevState.formVisibleOnPage
+      }));
+    }
   }
 
   handleClickPrevious = () => {
@@ -38,52 +46,34 @@ class InventoryControl extends React.Component {
     this.setState({
       mainInventory: newMainInventory,
       formVisibleOnPage: false
-    })
+    });
+  }
+
+  handleChangingSelectedCrate = (id) => {
+    const selectedCrate = this.state.mainInventory.filter(crate => crate.id === id)[0];
+    this.setState({ selectedCrate: selectedCrate });
   }
 
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-    let previousCrateButton = null;
-    let nextCrateButton = null;
-    const previousCrate = this.state.mainInventory[this.state.crateVisibleOnPage - 1];
-    const nextCrate = this.state.mainInventory[this.state.crateVisibleOnPage + 1];
-    const selectedCrate = this.state.mainInventory[this.state.crateVisibleOnPage];
 
-    if (this.state.formVisibleOnPage) {
+    if (this.state.selectedCrate != null) {
+      currentlyVisibleState = <CrateDetail crate={this.state.selectedCrate} />;
+      buttonText = 'Return to Inventory';
+    } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewCrateForm onNewCrateCreation={this.handleAddingNewCrateToInventory} />;
       buttonText = 'Return to Inventory';
     } else if (this.state.mainInventory[0] === undefined) {
-      currentlyVisibleState = <Crate name='No pie crates have been added to the inventory yet' />;
+      currentlyVisibleState = <Inventory inventory={this.state.mainInventory} />;
       buttonText = 'Add Crate';
-    } else if (this.state.mainInventory.length === 1) {
-      currentlyVisibleState = <Crate name={selectedCrate.name} />;
+    } else if (this.state.mainInventory) {
+      currentlyVisibleState = <Inventory inventory={this.state.mainInventory} onCrateSelection={this.handleChangingSelectedCrate} />;
       buttonText = 'Add Crate';
-    } else if (this.state.crateVisibleOnPage < 1) {
-      currentlyVisibleState = <Crate name={selectedCrate.name} />;
-      nextCrateButton = <button onClick={this.handleClickNext}>Next Crate &#8594;</button>
-      buttonText = 'Add Crate';
-    } else if (this.state.crateVisibleOnPage > this.state.mainInventory.length - 1) {
-      currentlyVisibleState = <Crate name={selectedCrate.name} />;
-      previousCrateButton = <button onClick={this.handleClickPrevious}>&#8592; Previous Crate</button>;
-      nextCrateButton = <button onClick={this.handleClickNext}>Next Crate &#8594;</button>;
-      buttonText = 'Add Crate';
-    } else {
-      currentlyVisibleState = <Crate name={selectedCrate.name} />;
-      previousCrateButton = <button onClick={this.handleClickPrevious}>&#8592; Previous Crate</button>;
-      buttonText = 'Add Crate';
-      // } else if (this.state.mainInventory[0] === undefined) {
-      //   currentlyVisibleState = <Inventory inventory={this.state.mainInventory} />;
-      //   buttonText = 'Add Crate';
-      // } else if (this.state.mainInventory) {
-      //   currentlyVisibleState = <Inventory inventory={this.state.mainInventory} />;
-      //   buttonText = 'Add Crate';
     }
     return (
       <>
         {currentlyVisibleState}
-        {previousCrateButton}
-        {nextCrateButton}
         <button onClick={this.handleClick}>{buttonText}</button>
       </>
     );
