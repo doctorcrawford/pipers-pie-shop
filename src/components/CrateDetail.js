@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 function CrateDetail(props) {
-  const { crate } = props;
+  const { crate, onClickingDelete } = props;
 
   return (
     <>
@@ -13,13 +13,15 @@ function CrateDetail(props) {
       <p>Price: ${crate.price}</p>
       <p>Number of Pies Left in Crate: {crate.numberOfPies}</p>
       <button onClick={props.onClickingSell}>Sell Pie</button>
+      <button onClick={() => onClickingDelete(crate.id)}>Remove Crate from Inventory</button>
     </>
   );
 }
 
 CrateDetail.propTypes = {
   crate: PropTypes.object,
-  onClickingSell: PropTypes.func
+  onClickingSell: PropTypes.func,
+  onClickingDelete: PropTypes.func
 }
 
 export default CrateDetail;
