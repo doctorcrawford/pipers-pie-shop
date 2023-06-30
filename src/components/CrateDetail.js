@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 function CrateDetail(props) {
   const { crate, onClickingDelete, onClickingEdit, onClickingSell } = props;
 
+  let pieStock = crate.numberOfPies
+  if (crate.numberOfPies === 0) {
+    pieStock = 'Out of Stock!'
+  }
   return (
     <>
       <h2>Crate Detail</h2>
@@ -11,7 +15,7 @@ function CrateDetail(props) {
       <p>Main Ingredient: {crate.mainIngredient}</p>
       <p>Ice Cream Pairing: {crate.iceCreamPairing}</p>
       <p>Price: ${crate.price}</p>
-      <p>Number of Pies Left in Crate: {crate.numberOfPies}</p>
+      <p>Number of Pies Left in Crate: {pieStock}</p>
       <button onClick={onClickingSell}>Sell Pie</button>
       <button onClick={() => onClickingDelete(crate.id)}>Remove Crate from Inventory</button>
       <button onClick={() => onClickingEdit(crate.id)}>Edit Crate</button>
