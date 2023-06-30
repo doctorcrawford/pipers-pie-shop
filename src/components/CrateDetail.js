@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 function CrateDetail(props) {
   const { crate, onClickingDelete, onClickingEdit, onClickingSell } = props;
 
-  let pieStock = crate.numberOfPies
+  let pieStock = crate.numberOfPies;
+
+  if (crate.numberOfPies < 10) {
+    pieStock = `${crate.numberOfPies}, Low on Stock!`;
+  }
   if (crate.numberOfPies === 0) {
-    pieStock = 'Out of Stock!'
+    pieStock = 'Out of Stock!';
   }
   return (
     <>
