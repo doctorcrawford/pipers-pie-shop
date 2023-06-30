@@ -13,6 +13,10 @@ function Inventory(props) {
         <Crate
           whenCrateClicked={props.onCrateSelection}
           name={crate.name}
+          mainIngredient={crate.mainIngredient}
+          iceCreamPairing={crate.iceCreamPairing}
+          price={crate.price}
+          numberOfPies={crate.numberOfPies}
           id={crate.id}
           key={crate.id} />
       );

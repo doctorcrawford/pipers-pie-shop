@@ -14,6 +14,7 @@ function CrateDetail(props) {
       <p>Number of Pies Left in Crate: {crate.numberOfPies}</p>
       <button onClick={props.onClickingSell}>Sell Pie</button>
       <button onClick={() => onClickingDelete(crate.id)}>Remove Crate from Inventory</button>
+      <button onClick={props.onClickingEdit(crate.id)}>Edit Crate</button>
     </>
   );
 }
@@ -21,7 +22,8 @@ function CrateDetail(props) {
 CrateDetail.propTypes = {
   crate: PropTypes.object,
   onClickingSell: PropTypes.func,
-  onClickingDelete: PropTypes.func
+  onClickingDelete: PropTypes.func,
+  onClickingEdit: PropTypes.func
 }
 
 export default CrateDetail;

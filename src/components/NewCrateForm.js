@@ -19,9 +19,12 @@ function NewCrateForm(props) {
 
 
   return (
-    <ReusableForm
-      formSubmissionHandler={handleNewCrateFormSubmission}
-      buttonText='Add New Pie Crate' />
+    <>
+      <h2>Add New Pie Crate to Inventory</h2>
+      <ReusableForm
+        formSubmissionHandler={handleNewCrateFormSubmission}
+        buttonText='Add New Pie Crate' />
+    </>
   );
 }
 

@@ -1,9 +1,8 @@
 import React from "react";
 import Inventory from "./Inventory";
-import NewInventoryItemForm from "./NewCrateForm";
 import NewCrateForm from "./NewCrateForm";
-import Crate from "./Crate";
 import CrateDetail from "./CrateDetail";
+import EditCrateForm from './EditCrateForm';
 
 class InventoryControl extends React.Component {
 
@@ -12,16 +11,18 @@ class InventoryControl extends React.Component {
     this.state = {
       formVisibleOnPage: false,
       selectedCrate: null,
-      mainInventory: []
+      mainInventory: [],
+      editing: false
     }
   }
 
   handleClick = () => {
-    console.log(this.setState)
+    console.log(this.state);
     if (this.state.selectedCrate != null) {
       this.setState({
         formVisibleOnPage: false,
-        selectedCrate: null
+        selectedCrate: null,
+        editing: false
       });
     } else {
       this.setState(prevState => ({
@@ -31,8 +32,8 @@ class InventoryControl extends React.Component {
   }
 
   handleAddingNewCrateToInventory = (newCrate) => {
+    console.log(this.state);
     const newMainInventory = this.state.mainInventory.concat(newCrate);
-    console.log(newCrate.id);
     this.setState({
       mainInventory: newMainInventory,
       formVisibleOnPage: false
@@ -40,32 +41,52 @@ class InventoryControl extends React.Component {
   }
 
   handleChangingSelectedCrate = (id) => {
+    console.log(this.state);
     const selectedCrate = this.state.mainInventory.filter(crate => crate.id === id)[0];
     this.setState({ selectedCrate: selectedCrate });
   }
 
   handleSell = () => {
+    console.log(this.state);
     if (this.state.selectedCrate.numberOfPies > 0) {
       const soldPie = this.state.mainInventory
         .filter(crate => crate.id === this.state.selectedCrate.id)[0];
       if (soldPie) {
         soldPie.numberOfPies--;
       }
-      const editedmainInventory = this.state.mainInventory
+      const editedMainInventory = this.state.mainInventory
         .filter(crate => crate.id !== this.state.selectedCrate.id)
         .concat(soldPie);
 
       this.setState({
         ...this.state,
-        mainInventory: editedmainInventory
+        mainInventory: editedMainInventory
       });
     }
   }
 
   handleDeletingCrate = (id) => {
+    console.log(this.state);
     const newMainInventory = this.state.mainInventory.filter(crate => crate.id !== id);
     this.setState({
       mainInventory: newMainInventory,
+      selectedCrate: null
+    });
+  }
+
+  handleEditClick = () => {
+    console.log(this.state);
+    this.setState({ editing: true });
+  }
+
+  handleEditingCrateInInventory = (crateToEdit) => {
+    console.log(this.state);
+    const editedMainInventory = this.state.mainInventory
+      .filter(crate => crate.id !== this.state.selectedCrate.id)
+      .concat(crateToEdit);
+    this.setState({
+      mainInventory: editedMainInventory,
+      editing: false,
       selectedCrate: null
     });
   }
@@ -74,8 +95,11 @@ class InventoryControl extends React.Component {
     let currentlyVisibleState = null;
     let buttonText = null;
 
-    if (this.state.selectedCrate != null) {
-      currentlyVisibleState = <CrateDetail crate={this.state.selectedCrate} onClickingSell={this.handleSell} onClickingDelete = {this.handleDeletingCrate} />;
+    if (this.state.editing) {
+      currentlyVisibleState = <EditCrateForm crate={this.state.selectedCrate} onEditCrate={this.handleEditingCrateInInventory} />
+      buttonText = 'Return to Inventory';
+    } else if (this.state.selectedCrate != null) {
+      currentlyVisibleState = <CrateDetail crate={this.state.selectedCrate} onClickingSell={this.handleSell} onClickingDelete={this.handleDeletingCrate} onClickingEdit={this.handleEditClick} />;
       buttonText = 'Return to Inventory';
     } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewCrateForm onNewCrateCreation={this.handleAddingNewCrateToInventory} />;
