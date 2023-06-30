@@ -1,6 +1,26 @@
-# Getting Started with Create React App
+# Piper's Pie Parlor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An application hosting a site that allows the user to add crates of pies to a parlor's inventory.
+
+#### By Kyle Crawford
+
+## Technologies Used
+
+* React
+* Webpack
+
+## Description
+
+This application gives the user the ability to keep track of their pie inventory by adding crates of pie (130 pies per crate) to their overall inventory list. There is full CRUD functionality. The user is also able to 'sell' their pies and the app tracks the number of pies left in each crate.
+
+## Component Tree
+
+<img src="./src/img/component-tree.jpg" alt="Alt text" title="Optional title">
+
+## How To Run This Project
+
+1. Clone this repo.
+2. Open the terminal and navigate to this project's project directory.
 
 ## Available Scripts
 
@@ -29,42 +49,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Known Bugs
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* _Any known issues_
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## License
+[MIT](https://opensource.org/license/mit)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Copyright (c) 2023 Kyle Crawford
