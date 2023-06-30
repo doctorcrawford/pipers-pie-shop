@@ -22,7 +22,7 @@ function ReusableForm(props) {
           step='0.01'
           min='0.00'
           name='price'
-          placeholder="0.00" />
+          placeholder="Price" />
         <button type="submit">{props.buttonText}</button>
       </form>
     </>
