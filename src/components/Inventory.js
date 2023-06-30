@@ -25,7 +25,7 @@ function Inventory(props) {
   return (
     <>
       <h2>Piper's Inventory</h2>
-      <p>{inventory}</p>
+      {inventory}
     </>
   );
 }
