@@ -20,15 +20,23 @@ class InventoryControl extends React.Component {
     }));
   }
 
+  handleAddingNewCrateToInventory = (newCrate) => {
+    const newMainInventory = this.state.mainInventory.concat(newCrate);
+    this.setState({
+      mainInventory: newMainInventory,
+      formVisibleOnPage: false
+    })
+  }
+
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
 
     if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <NewCrateForm />;
+      currentlyVisibleState = <NewCrateForm onNewCrateCreation={this.handleAddingNewCrateToInventory} />;
       buttonText = 'Return to Inventory';
     } else {
-      currentlyVisibleState = <Inventory />;
+      currentlyVisibleState = <Inventory inventory={this.state.mainInventory} />;
       buttonText = 'Add Crate';
     }
     return (

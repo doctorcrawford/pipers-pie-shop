@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 function Inventory(props) {
   let inventory;
   
-  if (props.inventory === undefined) {
+  if (props.inventory[0] === undefined) {
     inventory = 'No pie crates have been added to the inventory yet';
   } else {
     inventory =
