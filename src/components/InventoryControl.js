@@ -17,7 +17,8 @@ class InventoryControl extends React.Component {
   }
 
   handleClick = () => {
-    if (this.setState.selectedCrate != null) {
+    console.log(this.setState)
+    if (this.state.selectedCrate != null) {
       this.setState({
         formVisibleOnPage: false,
         selectedCrate: null
@@ -27,18 +28,6 @@ class InventoryControl extends React.Component {
         formVisibleOnPage: !prevState.formVisibleOnPage
       }));
     }
-  }
-
-  handleClickPrevious = () => {
-    this.setState(prevState => ({
-      crateVisibleOnPage: prevState.crateVisibleOnPage - 1
-    }));
-  }
-
-  handleClickNext = () => {
-    this.setState(prevState => ({
-      crateVisibleOnPage: prevState.crateVisibleOnPage + 1
-    }));
   }
 
   handleAddingNewCrateToInventory = (newCrate) => {
@@ -55,17 +44,35 @@ class InventoryControl extends React.Component {
     this.setState({ selectedCrate: selectedCrate });
   }
 
+  handleSell = () => {
+    if (this.state.selectedCrate.numberOfPies > 0) {
+      const soldPie = this.state.mainInventory
+        .filter(crate => crate.id === this.state.selectedCrate.id)[0];
+      if (soldPie) {
+        soldPie.numberOfPies--;
+      }
+      const editedmainInventory = this.state.mainInventory
+        .filter(crate => crate.id !== this.state.selectedCrate.id)
+        .concat(soldPie);
+      
+      this.setState({
+        ...this.state,
+        mainInventory: editedmainInventory
+      });
+    }
+  }
+
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
 
     if (this.state.selectedCrate != null) {
-      currentlyVisibleState = <CrateDetail crate={this.state.selectedCrate} />;
+      currentlyVisibleState = <CrateDetail crate={this.state.selectedCrate} onClickingSell={this.handleSell} />;
       buttonText = 'Return to Inventory';
     } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewCrateForm onNewCrateCreation={this.handleAddingNewCrateToInventory} />;
       buttonText = 'Return to Inventory';
-    } else if (this.state.mainInventory) {
+    } else {
       currentlyVisibleState = <Inventory inventory={this.state.mainInventory} onCrateSelection={this.handleChangingSelectedCrate} />;
       buttonText = 'Add Crate';
     }

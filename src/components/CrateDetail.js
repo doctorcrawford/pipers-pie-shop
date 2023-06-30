@@ -8,16 +8,18 @@ function CrateDetail(props) {
     <>
       <h2>Crate Detail</h2>
       <h4>{crate.name}</h4>
-      <p>{crate.mainIngredient}</p>
-      <p>{crate.iceCreamPairing}</p>
-      <p>{crate.price}</p>
-      <p>{crate.numberOfPies}</p>
+      <p>Main Ingredient: {crate.mainIngredient}</p>
+      <p>Ice Cream Pairing: {crate.iceCreamPairing}</p>
+      <p>Price: ${crate.price}</p>
+      <p>Number of Pies Left in Crate: {crate.numberOfPies}</p>
+      <button onClick={props.onClickingSell}>Sell Pie</button>
     </>
   );
 }
 
 CrateDetail.propTypes = {
-  crate: PropTypes.object
+  crate: PropTypes.object,
+  onClickingSell: PropTypes.func
 }
 
 export default CrateDetail;
