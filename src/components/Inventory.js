@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 function Inventory(props) {
   let inventory;
 
-  if (props.inventory[0] === undefined) {
-    inventory = 'No pie crates have been added to the inventory yet';
-  } else {
+  // if (props.inventory[0] === undefined) {
+  //   inventory = 'No pie crates have been added to the inventory yet';
+  // } else {
     inventory =
-      props.inventory.map((crate) =>
+      Object.values(props.inventory).map((crate) =>
         <Crate
           whenCrateClicked={props.onCrateSelection}
           name={crate.name}
@@ -20,7 +20,7 @@ function Inventory(props) {
           id={crate.id}
           key={crate.id} />
       );
-  }
+  // }
 
   return (
     <>
@@ -31,7 +31,7 @@ function Inventory(props) {
 }
 
 Inventory.propTypes = {
-  inventory: PropTypes.array,
+  inventory: PropTypes.object,
   onCrateSelection: PropTypes.func
 };
 

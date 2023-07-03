@@ -1,8 +1,10 @@
 import React from "react";
+import { connect } from 'react-redux';
 import Inventory from "./Inventory";
 import NewCrateForm from "./NewCrateForm";
 import CrateDetail from "./CrateDetail";
 import EditCrateForm from './EditCrateForm';
+import PropTypes from 'prop-types';
 
 class InventoryControl extends React.Component {
 
@@ -11,7 +13,6 @@ class InventoryControl extends React.Component {
     this.state = {
       formVisibleOnPage: false,
       selectedCrate: null,
-      mainInventory: [],
       editing: false
     }
   }
@@ -31,15 +32,23 @@ class InventoryControl extends React.Component {
   }
 
   handleAddingNewCrateToInventory = (newCrate) => {
-    const newMainInventory = this.state.mainInventory.concat(newCrate);
-    this.setState({
-      mainInventory: newMainInventory,
-      formVisibleOnPage: false
-    });
+    const { dispatch } = this.props;
+    const { id, name, mainIngredient, iceCreamPairing, price, numberOfPies } = newCrate;
+    const action = {
+      type: 'ADD_CRATE',
+      id: id,
+      name: name,
+      mainIngredient: mainIngredient,
+      iceCreamPairing: iceCreamPairing,
+      price: price,
+      numberOfPies: numberOfPies
+    }
+    dispatch(action);
+    this.setState({ formVisibleOnPage: false });
   }
 
   handleChangingSelectedCrate = (id) => {
-    const selectedCrate = this.state.mainInventory.filter(crate => crate.id === id)[0];
+    const selectedCrate = this.props.mainInventory[id];
     this.setState({ selectedCrate: selectedCrate });
   }
 
@@ -61,11 +70,13 @@ class InventoryControl extends React.Component {
   }
 
   handleDeletingCrate = (id) => {
-    const newMainInventory = this.state.mainInventory.filter(crate => crate.id !== id);
-    this.setState({
-      mainInventory: newMainInventory,
-      selectedCrate: null
-    });
+    const { dispatch } = this.props;
+    const action = {
+      type: 'DELETE_CRATE',
+      id: id
+    }
+    dispatch(action);
+    this.setState({ selectedCrate: null });
   }
 
   handleEditClick = () => {
@@ -73,11 +84,19 @@ class InventoryControl extends React.Component {
   }
 
   handleEditingCrateInInventory = (crateToEdit) => {
-    const editedMainInventory = this.state.mainInventory
-      .filter(crate => crate.id !== this.state.selectedCrate.id)
-      .concat(crateToEdit);
+    const { dispatch } = this.props;
+    const { id, name, mainIngredient, iceCreamPairing, price, numberOfPies } = crateToEdit;
+    const action = {
+      type: 'ADD_CRATE',
+      id: id,
+      name: name,
+      mainIngredient: mainIngredient,
+      iceCreamPairing: iceCreamPairing,
+      price: price,
+      numberOfPies: numberOfPies
+    }
+    dispatch(action);
     this.setState({
-      mainInventory: editedMainInventory,
       editing: false,
       selectedCrate: null
     });
@@ -97,7 +116,7 @@ class InventoryControl extends React.Component {
       currentlyVisibleState = <NewCrateForm onNewCrateCreation={this.handleAddingNewCrateToInventory} />;
       buttonText = 'Return to Inventory';
     } else {
-      currentlyVisibleState = <Inventory inventory={this.state.mainInventory} onCrateSelection={this.handleChangingSelectedCrate} />;
+      currentlyVisibleState = <Inventory inventory={this.props.mainInventory} onCrateSelection={this.handleChangingSelectedCrate} />;
       buttonText = 'Add Crate';
     }
     return (
@@ -108,5 +127,17 @@ class InventoryControl extends React.Component {
     );
   }
 }
+
+InventoryControl.propTypes = {
+  mainInventory: PropTypes.object
+};
+
+const mapStateToProps = state => {
+  return {
+    mainInventory: state
+  }
+}
+
+InventoryControl = connect(mapStateToProps)(InventoryControl);
 
 export default InventoryControl;
