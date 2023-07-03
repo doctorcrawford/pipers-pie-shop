@@ -1,5 +1,5 @@
 const reducer = (state = {}, action) => {
-  const { name, mainIngredient, iceCreamPairing, price, id } = action;
+  const { name, mainIngredient, iceCreamPairing, price, numberOfPies, id } = action;
   switch (action.type) {
     case 'ADD_CRATE':
       return Object.assign({}, state, {
@@ -8,6 +8,7 @@ const reducer = (state = {}, action) => {
           mainIngredient: mainIngredient,
           iceCreamPairing: iceCreamPairing,
           price: price,
+          numberOfPies: numberOfPies,
           id: id
         }
       });
