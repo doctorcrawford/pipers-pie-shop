@@ -52,20 +52,23 @@ class InventoryControl extends React.Component {
     this.setState({ selectedCrate: selectedCrate });
   }
 
-  handleSell = () => {
-    if (this.state.selectedCrate.numberOfPies > 0) {
-      const soldPie = this.state.mainInventory
-        .filter(crate => crate.id === this.state.selectedCrate.id)[0];
-      if (soldPie) {
-        soldPie.numberOfPies--;
-      }
-      const editedMainInventory = this.state.mainInventory
-        .filter(crate => crate.id !== this.state.selectedCrate.id)
-        .concat(soldPie);
-
-      this.setState({
-        mainInventory: editedMainInventory
-      });
+  handleSell = (selectedId) => {
+    const { dispatch } = this.props;
+    const selectedCrate = this.props.mainInventory[selectedId];
+    const { id, name, mainIngredient, iceCreamPairing, price, numberOfPies } = selectedCrate;
+    const soldCrate = { ...selectedCrate, numberOfPies: numberOfPies - 1 };
+    const action = {
+      type: 'ADD_CRATE',
+      id: id,
+      name: name,
+      mainIngredient: mainIngredient,
+      iceCreamPairing: iceCreamPairing,
+      price: price,
+      numberOfPies: numberOfPies - 1
+    }
+    if (numberOfPies > 0) {
+      dispatch(action);
+      this.setState({ selectedCrate: soldCrate });
     }
   }
 

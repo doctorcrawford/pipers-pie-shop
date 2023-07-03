@@ -20,7 +20,7 @@ function CrateDetail(props) {
       <p>Ice Cream Pairing: {crate.iceCreamPairing}</p>
       <p>Price: ${crate.price}</p>
       <p>Number of Pies Left in Crate: {pieStock}</p>
-      <button onClick={onClickingSell}>Sell Pie</button>
+      <button onClick={() => onClickingSell(crate.id)}>Sell Pie</button>
       <button onClick={() => onClickingDelete(crate.id)}>Remove Crate from Inventory</button>
       <button onClick={() => onClickingEdit(crate.id)}>Edit Crate</button>
     </>
