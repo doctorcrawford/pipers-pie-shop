@@ -5,6 +5,7 @@ import NewCrateForm from "./NewCrateForm";
 import CrateDetail from "./CrateDetail";
 import EditCrateForm from './EditCrateForm';
 import PropTypes from 'prop-types';
+import * as a from './../actions';
 
 class InventoryControl extends React.Component {
 
@@ -33,16 +34,8 @@ class InventoryControl extends React.Component {
 
   handleAddingNewCrateToInventory = (newCrate) => {
     const { dispatch } = this.props;
-    const { id, name, mainIngredient, iceCreamPairing, price, numberOfPies } = newCrate;
-    const action = {
-      type: 'ADD_CRATE',
-      id: id,
-      name: name,
-      mainIngredient: mainIngredient,
-      iceCreamPairing: iceCreamPairing,
-      price: price,
-      numberOfPies: numberOfPies
-    }
+    const action = a.addCrate(newCrate);
+
     dispatch(action);
     this.setState({ formVisibleOnPage: false });
   }
@@ -55,17 +48,10 @@ class InventoryControl extends React.Component {
   handleSell = (selectedId) => {
     const { dispatch } = this.props;
     const selectedCrate = this.props.mainInventory[selectedId];
-    const { id, name, mainIngredient, iceCreamPairing, price, numberOfPies } = selectedCrate;
+    const { numberOfPies } = selectedCrate;
     const soldCrate = { ...selectedCrate, numberOfPies: numberOfPies - 1 };
-    const action = {
-      type: 'ADD_CRATE',
-      id: id,
-      name: name,
-      mainIngredient: mainIngredient,
-      iceCreamPairing: iceCreamPairing,
-      price: price,
-      numberOfPies: numberOfPies - 1
-    }
+    const action = a.addCrate(soldCrate);
+
     if (numberOfPies > 0) {
       dispatch(action);
       this.setState({ selectedCrate: soldCrate });
@@ -74,10 +60,7 @@ class InventoryControl extends React.Component {
 
   handleDeletingCrate = (id) => {
     const { dispatch } = this.props;
-    const action = {
-      type: 'DELETE_CRATE',
-      id: id
-    }
+    const action = a.deleteCrate(id)
     dispatch(action);
     this.setState({ selectedCrate: null });
   }
@@ -89,15 +72,7 @@ class InventoryControl extends React.Component {
   handleEditingCrateInInventory = (crateToEdit) => {
     const { dispatch } = this.props;
     const { id, name, mainIngredient, iceCreamPairing, price, numberOfPies } = crateToEdit;
-    const action = {
-      type: 'ADD_CRATE',
-      id: id,
-      name: name,
-      mainIngredient: mainIngredient,
-      iceCreamPairing: iceCreamPairing,
-      price: price,
-      numberOfPies: numberOfPies
-    }
+    const action = a.addCrate(crateToEdit);
     dispatch(action);
     this.setState({
       editing: false,

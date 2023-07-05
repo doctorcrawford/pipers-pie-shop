@@ -3,11 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducers/inventory-reducer';
 import { Provider } from 'react-redux';
+import { createLogger } from 'redux-logger';
 
-const store = createStore(reducer);
+const logger = createLogger({
+  titleFormatter: function (a, b, c) {
+    console.log(arguments);
+    return  a.type + 'Hummus';
+  }
+})
+const store = configureStore({
+  reducer: reducer,
+  middleware: (defaults) => defaults().concat(logger)
+});
 
 store.subscribe(() =>
   console.log(store.getState())
