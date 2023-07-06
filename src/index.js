@@ -4,19 +4,20 @@ import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
-import reducer from './reducers/inventory-reducer';
+// import reducer from './reducers/inventory-reducer';
+import rootReducer from './reducers/index';
 import { Provider } from 'react-redux';
-import { createLogger } from 'redux-logger';
+// import { createLogger } from 'redux-logger';
 
-const logger = createLogger({
-  titleFormatter: function (a, b, c) {
-    console.log(arguments);
-    return  a.type + 'Hummus';
-  }
-})
+// const logger = createLogger({
+//   titleFormatter: function (a, b, c) {
+//     console.log(arguments);
+//     return  a.type + 'Hummus';
+//   }
+// })
 const store = configureStore({
-  reducer: reducer,
-  middleware: (defaults) => defaults().concat(logger)
+  reducer: rootReducer
+  // middleware: (defaults) => defaults().concat(logger)
 });
 
 store.subscribe(() =>

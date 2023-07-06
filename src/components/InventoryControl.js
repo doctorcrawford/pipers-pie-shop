@@ -5,14 +5,15 @@ import NewCrateForm from "./NewCrateForm";
 import CrateDetail from "./CrateDetail";
 import EditCrateForm from './EditCrateForm';
 import PropTypes from 'prop-types';
-import * as a from './../actions';
+import * as a from './../actions/index';
+import * as c from './../actions/ActionTypes'
+
 
 class InventoryControl extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      formVisibleOnPage: false,
       selectedCrate: null,
       editing: false
     }
@@ -21,14 +22,17 @@ class InventoryControl extends React.Component {
   handleClick = () => {
     if (this.state.selectedCrate != null) {
       this.setState({
-        formVisibleOnPage: false,
+        // formVisibleOnPage: false,
         selectedCrate: null,
         editing: false
       });
     } else {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage
-      }));
+      // this.setState(prevState => ({
+      //   formVisibleOnPage: !prevState.formVisibleOnPage
+      // }));
+      const { dispatch } = this.props;
+      const action = a.toggleForm();
+      dispatch(action);
     }
   }
 
@@ -37,7 +41,9 @@ class InventoryControl extends React.Component {
     const action = a.addCrate(newCrate);
 
     dispatch(action);
-    this.setState({ formVisibleOnPage: false });
+    // this.setState({ formVisibleOnPage: false });
+    const action2 = a.toggleForm();
+    dispatch(action2);
   }
 
   handleChangingSelectedCrate = (id) => {
@@ -71,7 +77,7 @@ class InventoryControl extends React.Component {
 
   handleEditingCrateInInventory = (crateToEdit) => {
     const { dispatch } = this.props;
-    const { id, name, mainIngredient, iceCreamPairing, price, numberOfPies } = crateToEdit;
+    // const { id, name, mainIngredient, iceCreamPairing, price, numberOfPies } = crateToEdit;
     const action = a.addCrate(crateToEdit);
     dispatch(action);
     this.setState({
@@ -90,7 +96,7 @@ class InventoryControl extends React.Component {
     } else if (this.state.selectedCrate != null) {
       currentlyVisibleState = <CrateDetail crate={this.state.selectedCrate} onClickingSell={this.handleSell} onClickingDelete={this.handleDeletingCrate} onClickingEdit={this.handleEditClick} />;
       buttonText = 'Return to Inventory';
-    } else if (this.state.formVisibleOnPage) {
+    } else if (this.props.formVisibleOnPage) {
       currentlyVisibleState = <NewCrateForm onNewCrateCreation={this.handleAddingNewCrateToInventory} />;
       buttonText = 'Return to Inventory';
     } else {
@@ -107,12 +113,14 @@ class InventoryControl extends React.Component {
 }
 
 InventoryControl.propTypes = {
-  mainInventory: PropTypes.object
+  mainInventory: PropTypes.object,
+  formVisibleOnPage: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
-    mainInventory: state
+    mainInventory: state.mainInventory,
+    formVisibleOnPage: state.formVisibleOnPage
   }
 }
 

@@ -1,9 +1,12 @@
 import rootReducer from '../../reducers/index';
-import { createStore } from 'redux';
+// import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import formVisibleReducer from '../../reducers/form-visible-reducer';
 import inventoryReducer from '../../reducers/inventory-reducer';
+import * as c from '../../actions/ActionTypes';
 
-let store = createStore(rootReducer);
+// let store = createStore(rootReducer);
+let store = configureStore({reducer: rootReducer});
 
 describe('rootReducer', () => {
 
@@ -37,7 +40,7 @@ describe('rootReducer', () => {
 
   test('Check that TOGGLE_FORM action works for formVisibleReducer and root reducer', () => {
     const action = {
-      type: 'TOGGLE_FORM'
+      type: c.TOGGLE_FORM
     }
     store.dispatch(action);
     expect(store.getState().formVisibleOnPage).toEqual(formVisibleReducer(undefined, action));

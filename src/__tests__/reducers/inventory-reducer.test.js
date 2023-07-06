@@ -1,4 +1,6 @@
 import inventoryReducer from '../../reducers/inventory-reducer';
+import { formatDistanceToNow } from 'date-fns';
+import * as c from '../../actions/ActionTypes'
 
 describe('inventoryReducer', () => {
 
@@ -24,6 +26,8 @@ describe('inventoryReducer', () => {
     mainIngredient: 'Apples',
     iceCreamPairing: 'Vanilla',
     price: 12.99,
+    timeOpen: new Date(),
+    formattedWaitTime: formatDistanceToNow(new Date(), { addSuffix: true }),
     id: 1
   };
 
@@ -31,14 +35,16 @@ describe('inventoryReducer', () => {
     expect(inventoryReducer({}, { type: null })).toEqual({});
   });
 
-  test('Shoudl successfully add new crate date to inventory', () => {
-    const { name, mainIngredient, iceCreamPairing, price, id } = crateData;
+  test('Shoudl successfully add new crate date to inventory that includes date-fns-formatted wait times', () => {
+    const { name, mainIngredient, iceCreamPairing, price, timeOpen, formattedWaitTime, id } = crateData;
     action = {
       type: 'ADD_CRATE',
       name: name,
       mainIngredient: mainIngredient,
       iceCreamPairing: iceCreamPairing,
       price: price,
+      timeOpen,
+      formattedWaitTime,
       id: id
     };
 
@@ -48,6 +54,8 @@ describe('inventoryReducer', () => {
         mainIngredient: mainIngredient,
         iceCreamPairing: iceCreamPairing,
         price: price,
+        timeOpen,
+        formattedWaitTime,
         id: id
       }
     });
@@ -69,4 +77,24 @@ describe('inventoryReducer', () => {
     });
   });
 
-});
+  test('Should add a formatted wait time to crate entry', () => {
+    const { name, mainIngredient, iceCreamPairing, price, timeOpen, id } = crateData;
+    action = {
+      type: c.UPDATE_TIME,
+      formattedWaitTime: '4 minutes ago',
+      id
+    };
+    expect(inventoryReducer({ [id]: crateData }, action)).toEqual({
+      [id]: {
+        name,
+        mainIngredient,
+        iceCreamPairing,
+        price,
+        timeOpen,
+        id,
+        formattedWaitTime: '4 minutes ago'
+      }
+    })
+  })
+
+  });
