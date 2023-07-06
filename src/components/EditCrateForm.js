@@ -7,7 +7,7 @@ function EditCrateForm(props) {
 
   function handleEditCrateFormSubmission(e) {
     e.preventDefault();
-    props.onEditCrate({ name: e.target.name.value, mainIngredient: e.target.mainIngredient.value, iceCreamPairing: e.target.iceCreamPairing.value, price: e.target.price.value, numberOfPies: crate.numberOfPies, id: crate.id });
+    props.onEditCrate({ name: e.target.name.value, mainIngredient: e.target.mainIngredient.value, iceCreamPairing: e.target.iceCreamPairing.value, price: e.target.price.value, numberOfPies: crate.numberOfPies, id: crate.id, formattedWaitTime: crate.formattedWaitTime });
   }
   return (
     <>
