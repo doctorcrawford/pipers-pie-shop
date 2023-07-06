@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { v4 } from 'uuid';
 import ReusableForm from "./ReusableForm";
+import { formatDistanceToNow } from "date-fns";
 
 function NewCrateForm(props) {
 
@@ -13,7 +14,11 @@ function NewCrateForm(props) {
       iceCreamPairing: e.target.iceCreamPairing.value,
       price: e.target.price.value,
       numberOfPies: 130,
-      id: v4()
+      id: v4(),
+      timeOpen: new Date(),
+      formattedWaitTime: formatDistanceToNow(new Date(), {
+        addSuffix: true
+      })
     });
   }
 

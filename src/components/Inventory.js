@@ -8,18 +8,19 @@ function Inventory(props) {
   // if (props.inventory[0] === undefined) {
   //   inventory = 'No pie crates have been added to the inventory yet';
   // } else {
-    inventory =
-      Object.values(props.inventory).map((crate) =>
-        <Crate
-          whenCrateClicked={props.onCrateSelection}
-          name={crate.name}
-          mainIngredient={crate.mainIngredient}
-          iceCreamPairing={crate.iceCreamPairing}
-          price={crate.price}
-          numberOfPies={crate.numberOfPies}
-          id={crate.id}
-          key={crate.id} />
-      );
+  inventory =
+    Object.values(props.inventory).map((crate) =>
+      <Crate
+        whenCrateClicked={props.onCrateSelection}
+        name={crate.name}
+        mainIngredient={crate.mainIngredient}
+        iceCreamPairing={crate.iceCreamPairing}
+        price={crate.price}
+        numberOfPies={crate.numberOfPies}
+        formattedWaitTime={crate.formattedWaitTime}
+        id={crate.id}
+        key={crate.id} />
+    );
   // }
 
   return (

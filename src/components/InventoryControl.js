@@ -7,6 +7,7 @@ import EditCrateForm from './EditCrateForm';
 import PropTypes from 'prop-types';
 import * as a from './../actions/index';
 import * as c from './../actions/ActionTypes'
+import { formatDistanceToNow } from "date-fns";
 
 
 class InventoryControl extends React.Component {
@@ -17,6 +18,29 @@ class InventoryControl extends React.Component {
       selectedCrate: null,
       editing: false
     }
+  }
+
+  componentDidMount() {
+    this.waitTimeUpdateTimer = setInterval(() =>
+      this.updateCrateElapsedWaitTime(),
+      60000
+    )
+  }
+
+  componentWillUnmount() {
+    console.log('component unmounted!')
+    clearInterval(this.waitTimeUpdateTimer)
+  }
+
+  updateCrateElapsedWaitTime = () => {
+    const { dispatch } = this.props
+    Object.values(this.props.mainInventory).forEach(crate => {
+      const newFormattedWaitTime = formatDistanceToNow(crate.timeOpen, {
+        addSuffix: true
+      })
+      const action = a.updateTime(crate.id, newFormattedWaitTime)
+      dispatch(action)
+    })
   }
 
   handleClick = () => {

@@ -6,6 +6,7 @@ function Crate(props) {
     <>
       <div onClick={() => props.whenCrateClicked(props.id)}>
         <p><em>{props.name}</em></p>
+        <p><em>{props.formattedWaitTime}</em></p>
       </div>
     </>
   );
@@ -14,7 +15,8 @@ function Crate(props) {
 Crate.propTypes = {
   name: PropTypes.string,
   id: PropTypes.string,
-  whenCrateClicked: PropTypes.func
+  whenCrateClicked: PropTypes.func,
+  formattedWaitTime: PropTypes.string
 };
 
 export default Crate;
